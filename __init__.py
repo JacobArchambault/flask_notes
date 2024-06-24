@@ -94,7 +94,7 @@ def create_app(test_config=None):
 
     @app.route('/')
     def index():
-        return 'Index'
+        return redirect(url_for('note_index'))
 
     @app.route('/notes')
     @require_login
