@@ -1,3 +1,0 @@
-Single-database configuration for Flask.
-
-To run, enter flask run, followed by host and port, e.g. `flask run --host=0.0.0. --port=3000` 
