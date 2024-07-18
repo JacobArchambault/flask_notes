@@ -10,6 +10,6 @@ RUN pipenv lock
 RUN PIP_USER=1 PIP_IGNORE_INSTALLED=1 pipenv install -d --system --ignore-pipfile
 
 COPY . /app/notes
-WORKDIR /app/notes
+WORKDIR /app
 EXPOSE 80
-CMD ["flask", "run", "--port=80", "--host=0.0.0.0"]
+CMD ["gunicorn", "-b 0.0.0.0:80", "notes:create_app()"]

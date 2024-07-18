@@ -11,3 +11,7 @@ flask db upgrade
 sudo podman exec -i notes_db_container psql -U notes_user -l
 
 psql -h localhost -U notes_user -l
+
+To run, enter `flask run`, optionally followed by host and port, e.g. `flask run --host=0.0.0.0 --port=3000` from the `notes` directory
+
+to run with a gunicorn (a production-grade server), move one directory up and run `gunicorn -b 0.0.0.0:5000 "notes:create_app()"`
