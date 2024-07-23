@@ -13,7 +13,7 @@ export DB_PORT='5432'
 etc.
 
 ## Running from a container
-This project uses podman and podman compose for containerization, a rootless, daemonless alternative to docker. 
+This project uses podman, a rootless, daemonless alternative to docker for containerization, with podman compose. 
 
 `cd` into the project's root directory, then run `podman compose up`. 
 

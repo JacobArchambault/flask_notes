@@ -25,9 +25,7 @@ def create_app(test_config=None):
     def require_login(view):
         @functools.wraps(view)
         def wrapped_view(**kwargs):
-            if not g.user:
-                return redirect(url_for('log_in'))
-            return view(**kwargs)
+            return redirect(url_for('log_in')) if not g.user else view(**kwargs)
         return wrapped_view
 
     @app.errorhandler(404)
@@ -37,10 +35,7 @@ def create_app(test_config=None):
     @app.before_request
     def load_user():
         user_id = session.get('user_id')
-        if user_id:
-            g.user = User.query.get(user_id)
-        else:
-            g.user = None
+        g.user = User.query.get(user_id) if user_id else None
 
     @app.route('/sign_up', methods=('GET', 'POST'))
     def sign_up():
@@ -57,8 +52,7 @@ def create_app(test_config=None):
                 error = 'Username is already taken.'
             
             if error is None:
-                user = User(username=username, password=generate_password_hash(password))
-                db.session.add(user)
+                db.session.add(User(username=username, password=generate_password_hash(password)))
                 db.session.commit()
                 flash("Successfully signed up! Please log in.", 'success')
                 return redirect(url_for('log_in'))

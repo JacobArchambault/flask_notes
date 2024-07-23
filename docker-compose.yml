@@ -6,8 +6,6 @@ services:
       - "5000:80"
     depends_on:
       - notes_db_container
-    environment:
-      - PYTHONUNBUFFERED=0
   notes_db_container:
     image: postgres:alpine
     environment:
