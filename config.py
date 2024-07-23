@@ -1,6 +1,6 @@
 import os
 
-db_host = "notes_notes_db_container_1"
+db_host = os.environ.get('DB_HOST', default='localhost')
 db_name = os.environ.get('DB_NAME')
 db_user = os.environ.get('DB_USERNAME')
 db_password = os.environ.get('DB_PASSWORD')
