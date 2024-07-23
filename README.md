@@ -1,17 +1,42 @@
-pipenv install --dev python-dotenv
-pipenv install psycopg2-binary Flask-SQLAlchemy Flask-Migrate
+# About
+A python flask application for creating, updating, and deleting markdown notes, including user creation and login/logout functionality
 
-sudo podman build -t notesapp:0.1 .
-sudo podman run --privileged --rm -it -v ./migrations:/app/notes/migrations notesapp:0.1 bash 
-# must run privileged so that app has appropriate permissions to perform flask db init and to read migrations folder
+# Running the application
+Regardless of your method of running, you'll want to create a `.env` file in the root directory of this project to ensure that you've defined the variables used in the project's `config.py` file. E.g., 
+
+```bash
+export DB_NAME='notes'
+export DB_USERNAME='postgres'
+export DB_PASSWORD='my_awesome_password'
+export DB_PORT='5432'
+```
+etc.
+
+## Running from a container
+This project uses podman and podman compose for containerization, a rootless, daemonless alternative to docker. 
+
+`cd` into the project's root directory, then run `podman compose up`. 
+
+Next, in a separate terminal, run `podman exec -it notes_web_1 sh`. Once in the container's shell, run `flask db init`, `flask db migrate` and `flask db upgrade`. Then `exit`.
+
+Finally, navigate to localhost:5000 in a web browser.
+
+### Note on running with docker 
+The podman cli is nearly identical to that for docker. Consequently, if you wish to run with docker, substituting `docker` for `podman` in the commands above should suffice (No guarantees, though).
+
+## Running locally
+Ensure Pipenv is installed on your machine. Then run 
+`pipenv shell` from the project's root directory. Next, run
+
+```bash
+bash up.sh
 flask db init
 flask db migrate
 flask db upgrade
+```
 
-sudo podman exec -i notes_db_container psql -U notes_user -l
+This will create an instance of the db running in a container (provided podman is installed - if it isn't, you can modify the script to use docker instead), then initialize it.
 
-psql -h localhost -U notes_user -l
+From there, to run, enter `flask run`, optionally followed by host and port, e.g. `flask run --host=0.0.0.0 --port=3000` from the `notes` directory. then navigate to localhost:3000 in a browser
 
-To run, enter `flask run`, optionally followed by host and port, e.g. `flask run --host=0.0.0.0 --port=3000` from the `notes` directory
-
-to run with a gunicorn (a production-grade server), move one directory up and run `gunicorn -b 0.0.0.0:5000 "notes:create_app()"`
+Alternately, to run with a gunicorn (a production-grade server), move one directory up and run `gunicorn -b 0.0.0.0:5000 "notes:create_app()"`. Then navigate to localhost:5000 in a browser
