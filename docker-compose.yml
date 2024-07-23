@@ -1,0 +1,25 @@
+version: '0.0.1'
+
+services:
+  web:
+    restart: always
+    build: .
+    ports:
+      - "5000:80"
+    depends_on:
+      - notes_db_container
+    environment:
+      - PYTHONUNBUFFERED=0
+  notes_db_container:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_USER: notes_user
+      POSTGRES_PASSWORD: secure_password
+      POSTGRES_DB: notes
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
