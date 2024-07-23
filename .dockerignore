@@ -1,5 +1,10 @@
-.dockerignore
-Dockerfile
-.gitignore
-Pipfile.lock
 migrations/
+
+.dockerignore
+.gitignore
+down.sh
+docker-compose.yml
+Dockerfile
+Pipfile.lock
+up.sh
+README.md

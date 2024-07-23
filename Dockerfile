@@ -1,4 +1,4 @@
-FROM python:3 AS base
+FROM python:alpine AS base
 ENV PYBASE /pybase
 ENV PYTHONUSERBASE $PYBASE
 ENV PATH $PYBASE/bin:$PATH
