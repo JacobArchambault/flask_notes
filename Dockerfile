@@ -4,11 +4,9 @@ ENV PYTHONUSERBASE $PYBASE
 ENV PATH $PYBASE/bin:$PATH
 
 FROM base AS builder
-RUN pip install pipenv
 WORKDIR /tmp
-COPY Pipfile .
-RUN pipenv lock
-RUN PIP_USER=1 PIP_IGNORE_INSTALLED=1 pipenv install -d --system --ignore-pipfile
+COPY requirements.txt .
+RUN PIP_USER=1 PIP_IGNORE_INSTALLED=1 pip install -r requirements.txt
 
 FROM base
 COPY --from=builder /pybase /pybase
