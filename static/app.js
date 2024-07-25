@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if ($deleteIcons.length > 0) {
     $deleteIcons.forEach(function ($el) {
-      console.log("adding event listener", $el);
       $el.addEventListener('click', function () {
         let $target = document.getElementById($el.dataset.target);
         $target.remove();
