@@ -3,10 +3,9 @@ document.addEventListener('DOMContentLoaded', function () {
     $deleteIcons = Array.prototype.slice.call(document.querySelectorAll('.delete'), 0);
 
   if ($navbarBurgers.length > 0) {
-    $navbarBurgers.forEach(function($el) {
-      $el.addEventListener('click', function() {
-        let target = $el.dataset.target,
-          $target = document.getElementById(target);
+    $navbarBurgers.forEach(function ($el) {
+      $el.addEventListener('click', function () {
+        let $target = document.getElementById($el.dataset.target);
         // Toggle the class on both the "navbar-burger" and the "navbar-menu"
         $el.classList.toggle('is-active');
         $target.classList.toggle('is-active');
@@ -15,11 +14,10 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   if ($deleteIcons.length > 0) {
-    $deleteIcons.forEach(function($el) {
+    $deleteIcons.forEach(function ($el) {
       console.log("adding event listener", $el);
-      $el.addEventListener('click', function() {
-        let target = $el.dataset.target,
-          $target = document.getElementById(target);
+      $el.addEventListener('click', function () {
+        let $target = document.getElementById($el.dataset.target);
         $target.remove();
       });
     });
