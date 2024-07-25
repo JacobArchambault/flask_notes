@@ -15,9 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if ($deleteIcons.length > 0) {
     $deleteIcons.forEach(function ($el) {
-      $el.addEventListener('click', function () {
-        document.getElementById($el.dataset.target).remove();
-      });
+      $el.addEventListener('click', () => document.getElementById($el.dataset.target).remove());
     });
   }
 
