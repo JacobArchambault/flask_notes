@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-  let $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0),
-    $deleteIcons = Array.prototype.slice.call(document.querySelectorAll('.delete'), 0);
-
+  let $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
   if ($navbarBurgers.length > 0) {
     $navbarBurgers.forEach(function ($el) {
       $el.addEventListener('click', function () {
@@ -13,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  let $deleteIcons = Array.prototype.slice.call(document.querySelectorAll('.delete'), 0);
   if ($deleteIcons.length > 0) {
     $deleteIcons.forEach(function ($el) {
       $el.addEventListener('click', () => document.getElementById($el.dataset.target).remove());
