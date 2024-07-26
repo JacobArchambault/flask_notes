@@ -61,6 +61,7 @@ def create_app(test_config=None):
             return redirect(url_for('log_in'))
 
         flash(error, 'error')
+        return render_template('sign_up.html')
 
     @app.route('/log_in', methods=('GET', 'POST'))
     def log_in():
