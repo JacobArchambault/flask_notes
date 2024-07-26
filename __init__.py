@@ -151,7 +151,7 @@ def create_app(test_config=None):
     def note_update(note_id):
         note = Note.query.filter_by(user_id=g.user.id, id=note_id).first_or_404()
 
-        if request.method in ['POST', 'PATACH', 'PUT']:
+        if request.method in ['POST', 'PATCH', 'PUT']:
             title = request.form['title']
             body = request.form['body']
             error = None
