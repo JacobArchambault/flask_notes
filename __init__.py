@@ -63,7 +63,7 @@ def create_app(test_config=None):
         flash(error, 'error')
         return render_template('sign_up.html')
 
-    @app.route('/log_in', methods=('GET', 'POST'))
+    @app.get('/log_in')
     def log_in():
         if request.method == 'POST':
             username = request.form['username']
@@ -81,6 +81,25 @@ def create_app(test_config=None):
                 return redirect(url_for('index'))
 
             flash(error, 'error')
+        return render_template('log_in.html')
+
+    @app.route('/log_in', methods=('GET', 'POST'))
+    def log_in_post():
+        username = request.form['username']
+        password = request.form['password']
+        error = None
+
+        user = User.query.filter_by(username=username).first()
+
+        if not user or not check_password_hash(user.password, password):
+            error = 'Username or password are incorrect.'
+        
+        if error is None:
+            session.clear()
+            session['user_id'] = user.id 
+            return redirect(url_for('index'))
+
+        flash(error, 'error')
         return render_template('log_in.html')
 
     @app.route('/log_out', methods=('GET', 'DELETE'))
