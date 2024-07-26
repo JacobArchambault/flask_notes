@@ -83,7 +83,7 @@ def create_app(test_config=None):
             flash(error, 'error')
         return render_template('log_in.html')
 
-    @app.route('/log_in')
+    @app.post('/log_in')
     def log_in_post():
         username = request.form['username']
         password = request.form['password']
