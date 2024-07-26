@@ -39,7 +39,7 @@ def create_app(test_config=None):
 
     @app.get('/sign_up')
     def sign_up():
-        return render_template('sign_up.html')
+        return render_template('sign_up.html', header="Sign Up")
 
     @app.post('/sign_up')
     def sign_up_post():
