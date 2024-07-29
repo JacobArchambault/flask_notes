@@ -1,5 +1,5 @@
 migrations/
-
+venv/
 .dockerignore
 .gitignore
 down.sh
