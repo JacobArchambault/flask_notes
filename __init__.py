@@ -37,33 +37,28 @@ def create_app(test_config=None):
         user_id = session.get('user_id')
         g.user = User.query.get(user_id) if user_id else None
 
-    @app.get('/sign_up')
+    @app.route('/sign_up', methods=('GET', 'POST'))
     def sign_up():
-        form_post = url_for('sign_up_post')
-        anchor_link = url_for('log_in')
-        return render_template('sign_up.html', action="Sign Up", prompt="Already have an account? Log In.", form_post=form_post, anchor_link=anchor_link)
+        if request.method == 'POST':
+            username = request.form['username']
+            password = request.form['password']
+            error = None
 
-    @app.post('/sign_up')
-    def sign_up_post():
-        username = request.form['username']
-        password = request.form['password']
-        error = None
+            if not username: 
+                error = 'Username is required.'
+            elif not password: 
+                error = 'Password is required.'
+            elif User.query.filter_by(username=username).first():
+                error = 'Username is already taken.'
+            
+            if error is None:
+                db.session.add(User(username=username, password=generate_password_hash(password)))
+                db.session.commit()
+                flash("Successfully signed up! Please log in.", 'success')
+                return redirect(url_for('log_in'))
 
-        if not username: 
-            error = 'Username is required.'
-        elif not password: 
-            error = 'Password is required.'
-        elif User.query.filter_by(username=username).first():
-            error = 'Username is already taken.'
-        
-        if error is None:
-            db.session.add(User(username=username, password=generate_password_hash(password)))
-            db.session.commit()
-            flash("Successfully signed up! Please log in.", 'success')
-            return redirect(url_for('log_in'))
-
-        flash(error, 'error')
-        form_post = url_for('sign_up_post')
+            flash(error, 'error')
+        form_post = url_for('sign_up')
         anchor_link = url_for('log_in')
         return render_template('sign_up.html', action="Sign Up", prompt="Already have an account? Log In.", form_post=form_post, anchor_link=anchor_link)
 
