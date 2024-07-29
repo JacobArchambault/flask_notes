@@ -121,7 +121,7 @@ def create_app(test_config=None):
 
             flash(error, 'error')
         form_post = url_for('note_create')
-        return render_template('note_form.html', header="New Note", form_post=form_post, button_value="Create Note")
+        return render_template('note_form.html', header="New Note", form_post=form_post, button_value="Create Note", title="", body="")
 
     @app.route('/notes/<note_id>/edit', methods=('GET', 'POST', 'PATCH', 'PUT'))
     @require_login
@@ -147,8 +147,9 @@ def create_app(test_config=None):
             flash(error, 'error')
 
         title = note.title
+        body = note.body
         form_post = url_for('note_update', note_id=note.id)
-        return render_template('note_update.html', note=note, header=f"Edit Note: {title}", form_post=form_post, button_value="Update Note")
+        return render_template('note_update.html', note=note, header=f"Edit Note: {title}", form_post=form_post, button_value="Update Note", title=title, body=body)
 
     @app.route('/notes/<note_id>/delete', methods=('GET', 'DELETE'))
     @require_login
