@@ -149,7 +149,7 @@ def create_app(test_config=None):
         title = note.title
         body = note.body
         form_post = url_for('note_update', note_id=note.id)
-        return render_template('note_update.html', note=note, header=f"Edit Note: {title}", form_post=form_post, button_value="Update Note", title=title, body=body)
+        return render_template('note_form.html', note=note, header=f"Edit Note: {title}", form_post=form_post, button_value="Update Note", title=title, body=body)
 
     @app.route('/notes/<note_id>/delete', methods=('GET', 'DELETE'))
     @require_login
