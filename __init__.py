@@ -1,10 +1,10 @@
 import os
-import functools
 from flask import Flask, render_template, redirect, url_for, request, session, flash, g
 from flask_migrate import Migrate 
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
+from notes.login.require_login import require_login
 
 def create_app(test_config=None):
     app = Flask(__name__)
@@ -22,12 +22,6 @@ def create_app(test_config=None):
     db.init_app(app)
     migrate = Migrate(app, db)
     
-    def require_login(view):
-        @functools.wraps(view)
-        def wrapped_view(**kwargs):
-            return redirect(url_for('log_in')) if not g.user else view(**kwargs)
-        return wrapped_view
-
     @app.errorhandler(404)
     def page_note_found(e):
         return render_template('404.html'), 404
