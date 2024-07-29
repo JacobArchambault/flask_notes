@@ -100,29 +100,26 @@ def create_app(test_config=None):
     def note_index():
         return render_template('note_index.html', notes=g.user.notes)
 
-    @app.get('/notes/new')
+
+    @app.route('/notes/new', methods=('GET', 'POST'))
     @require_login
     def note_create():
-        return render_template('note_create.html')
+        if request.method == 'POST':
+            title = request.form['title']
+            body = request.form['body']
+            error = None
 
-    @app.post('/notes/new')
-    @require_login
-    def note_create_post():
-        title = request.form['title']
-        body = request.form['body']
-        error = None
+            if not title: 
+                error = 'Title is required.'
+            
+            if error is None:
+                note = Note(author=g.user, title=title, body=body)
+                db.session.add(note)
+                db.session.commit()
+                flash(f"Successfully created note: {title}", 'success')
+                return redirect(url_for('note_index'))
 
-        if not title: 
-            error = 'Title is required.'
-        
-        if error is None:
-            note = Note(author=g.user, title=title, body=body)
-            db.session.add(note)
-            db.session.commit()
-            flash(f"Successfully created note: {title}", 'success')
-            return redirect(url_for('note_index'))
-
-        flash(error, 'error')
+            flash(error, 'error')
 
         return render_template('note_create.html')
 
