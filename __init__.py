@@ -39,8 +39,8 @@ def create_app(test_config=None):
 
     @app.get('/sign_up')
     def sign_up():
-        foo = url_for('sign_up_post')
-        return render_template('sign_up.html', action="Sign Up", prompt="Already have an account? Log In.", foo=foo)
+        form_post = url_for('sign_up_post')
+        return render_template('sign_up.html', action="Sign Up", prompt="Already have an account? Log In.", form_post=form_post)
 
     @app.post('/sign_up')
     def sign_up_post():
@@ -62,8 +62,8 @@ def create_app(test_config=None):
             return redirect(url_for('log_in'))
 
         flash(error, 'error')
-        foo = url_for('sign_up_post')
-        return render_template('sign_up.html', action="Sign Up", prompt="Already have an account? Log In.", foo=foo)
+        form_post = url_for('sign_up_post')
+        return render_template('sign_up.html', action="Sign Up", prompt="Already have an account? Log In.", form_post=form_post)
 
     @app.get('/log_in')
     def log_in():
