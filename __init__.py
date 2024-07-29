@@ -39,7 +39,7 @@ def create_app(test_config=None):
 
     @app.get('/sign_up')
     def sign_up():
-        return render_template('sign_up.html', header="Sign Up", prompt="Already have an account? Log In.")
+        return render_template('sign_up.html', action="Sign Up", prompt="Already have an account? Log In.")
 
     @app.post('/sign_up')
     def sign_up_post():
@@ -61,7 +61,7 @@ def create_app(test_config=None):
             return redirect(url_for('log_in'))
 
         flash(error, 'error')
-        return render_template('sign_up.html', header="Sign Up", prompt="Already have an account? Log In.")
+        return render_template('sign_up.html', action="Sign Up", prompt="Already have an account? Log In.")
 
     @app.get('/log_in')
     def log_in():

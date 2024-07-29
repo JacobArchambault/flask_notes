@@ -5,7 +5,7 @@
 <div class="columns is-desktop">
   <div class="column"></div>
   <div class="column is-half-desktop">
-    <h2 class="is-size-3">{{ header }}</h2>
+    <h2 class="is-size-3">{{ action }}</h2>
 
     <form method="post" action="{{ url_for('sign_up_post') }}">
       <div class="field">
@@ -24,7 +24,7 @@
 
       <div class="field is-grouped">
         <div class="control">
-          <input type="submit" value="Sign Up" class="button is-link" />
+          <input type="submit" value="{{ action }}" class="button is-link" />
         </div>
         <div class="control">
           <a href="#" class="button is-text">
