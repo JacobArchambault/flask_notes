@@ -17,7 +17,7 @@ This project uses podman, a rootless, daemonless alternative to docker for conta
 
 `cd` into the project's root directory, then run `podman compose up`. 
 
-Next, in a separate terminal, run `podman exec -it notes_web_1 sh`. Once in the container's shell, run `flask db init`, `flask db migrate` and `flask db upgrade`. Then `exit`.
+Next, in a separate terminal, run `podman exec -it notes_web_1 sh`. Once in the container's shell, `cd` into the `notes` directory and run `flask db init`, `flask db migrate` and `flask db upgrade`. Then `exit`.
 
 Finally, navigate to localhost:5000 in a web browser.
 
