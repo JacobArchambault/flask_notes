@@ -147,7 +147,8 @@ def create_app(test_config=None):
             flash(error, 'error')
 
         title = note.title
-        return render_template('note_update.html', note=note, header=f"Edit Note: {title}")
+        form_post = url_for('note_update', note_id=note.id)
+        return render_template('note_update.html', note=note, header=f"Edit Note: {title}", form_post=form_post, button_value="Update Note")
 
     @app.route('/notes/<note_id>/delete', methods=('GET', 'DELETE'))
     @require_login
