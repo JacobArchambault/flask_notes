@@ -60,30 +60,29 @@ def create_app(test_config=None):
             flash(error, 'error')
         form_post = url_for('sign_up')
         anchor_link = url_for('log_in')
-        return render_template('sign_up.html', action="Sign Up", prompt="Already have an account? Log In.", form_post=form_post, anchor_link=anchor_link)
+        return render_template('log_in_form.html', action="Sign Up", prompt="Already have an account? Log In.", form_post=form_post, anchor_link=anchor_link)
 
-    @app.get('/log_in')
+    @app.route('/log_in', methods=('GET', 'POST'))
     def log_in():
-        return render_template('log_in.html')
+        if request.method == 'POST':
+            username = request.form['username']
+            password = request.form['password']
+            error = None
 
-    @app.post('/log_in')
-    def log_in_post():
-        username = request.form['username']
-        password = request.form['password']
-        error = None
+            user = User.query.filter_by(username=username).first()
 
-        user = User.query.filter_by(username=username).first()
+            if not user or not check_password_hash(user.password, password):
+                error = 'Username or password are incorrect.'
+            
+            if error is None:
+                session.clear()
+                session['user_id'] = user.id 
+                return redirect(url_for('index'))
 
-        if not user or not check_password_hash(user.password, password):
-            error = 'Username or password are incorrect.'
-        
-        if error is None:
-            session.clear()
-            session['user_id'] = user.id 
-            return redirect(url_for('index'))
-
-        flash(error, 'error')
-        return render_template('log_in.html')
+            flash(error, 'error')
+        form_post = url_for('log_in')
+        anchor_link = url_for('sign_up')
+        return render_template('log_in_form.html', action="Log In", prompt="Don't have an account? Sign Up.", form_post=form_post, anchor_link=anchor_link)
 
     @app.route('/log_out', methods=('GET', 'DELETE'))
     def log_out():
