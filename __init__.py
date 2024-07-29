@@ -121,7 +121,7 @@ def create_app(test_config=None):
 
             flash(error, 'error')
         form_post = url_for('note_create')
-        return render_template('note_create.html', header="New Note", form_post=form_post, button_value="Create Note")
+        return render_template('note_form.html', header="New Note", form_post=form_post, button_value="Create Note")
 
     @app.route('/notes/<note_id>/edit', methods=('GET', 'POST', 'PATCH', 'PUT'))
     @require_login
