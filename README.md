@@ -25,8 +25,9 @@ Finally, navigate to localhost:5000 in a web browser.
 The podman cli is nearly identical to that for docker. Consequently, if you wish to run with docker, substituting `docker` for `podman` in the commands above should suffice (No guarantees, though).
 
 ## Running locally
-Ensure Pipenv is installed on your machine. Then run 
-`pipenv shell` from the project's root directory. Next, run
+1. Enter a Python virtual environment: `python -m venv venv/ && . venv/bin/activate`
+2. Run `pip install -r requirements.txt`
+3. Next, run
 
 ```bash
 bash up.sh
