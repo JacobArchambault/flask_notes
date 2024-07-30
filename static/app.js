@@ -17,7 +17,4 @@ document.addEventListener('DOMContentLoaded', function () {
       $el.addEventListener('click', () => document.getElementById($el.dataset.target).remove());
     });
   }
-
-  // Initialize syntax highlighting
-  hljs.initHighlightingOnLoad();
 });

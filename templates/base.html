@@ -24,7 +24,7 @@
         <div class="navbar-end">
           {% if g.user %}
           <a class="navbar-item" href="{{ url_for('note_create') }}" aria-label="New Note">
-            <i class="far fa-plus-square"></i>
+            New Note
           </a>
           <a class="navbar-item" href="{{ url_for('log_out')}}">
             Log Out
@@ -71,7 +71,6 @@
               {% endblock %}
             </div>
           </section>
-          <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
           <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 
