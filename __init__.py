@@ -32,7 +32,7 @@ def create_app(test_config=None):
         user_id = session.get('user_id')
         g.user = User.query.get(user_id) if user_id else None
 
-    @app.route('/sign_up', methods=('GET', 'POST'))
+    @app.route('/sign_up/', methods=('GET', 'POST'))
     def sign_up():
         if request.method == 'POST':
             username = request.form['username']
@@ -57,7 +57,7 @@ def create_app(test_config=None):
         anchor_link = url_for('log_in')
         return render_template('log_in_form.html', action="Sign Up", prompt="Already have an account? Log In.", form_post=form_post, anchor_link=anchor_link)
 
-    @app.route('/log_in', methods=('GET', 'POST'))
+    @app.route('/log_in/', methods=('GET', 'POST'))
     def log_in():
         if request.method == 'POST':
             username = request.form['username']
@@ -79,7 +79,7 @@ def create_app(test_config=None):
         anchor_link = url_for('sign_up')
         return render_template('log_in_form.html', action="Log In", prompt="Don't have an account? Sign Up.", form_post=form_post, anchor_link=anchor_link)
 
-    @app.route('/log_out', methods=('GET', 'DELETE'))
+    @app.route('/log_out/', methods=('GET', 'DELETE'))
     def log_out():
         session.clear()
         flash('Successfully logged out.', 'success')
