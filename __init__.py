@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv, find_dotenv
 from notes.authorization.require_login import require_login
+from .models import db, User, Note
 load_dotenv(find_dotenv())
 
 def create_app(test_config=None):
@@ -17,7 +18,6 @@ def create_app(test_config=None):
     else:
         app.config.from_mapping(test_config)
     
-    from .models import db, User, Note
 
     db.init_app(app)
     migrate = Migrate(app, db)
