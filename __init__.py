@@ -85,51 +85,9 @@ def create_app(test_config=None):
         flash('Successfully logged out.', 'success')
         return redirect(url_for('log_in'))
 
-
     @app.route('/')
     def index():
-        return redirect(url_for('note_index'))
+        return redirect(url_for('notes.note_index'))
 
-    @app.route('/notes')
-    @require_login
-    def note_index():
-        return render_template('note_index.html', notes=g.user.notes)
-
-    @app.route('/notes/<note_id>/edit', methods=('GET', 'POST', 'PATCH', 'PUT'))
-    @require_login
-    def note_update(note_id):
-        note = Note.query.filter_by(user_id=g.user.id, id=note_id).first_or_404()
-
-        if request.method in ['POST', 'PATCH', 'PUT']:
-            title = request.form['title']
-            body = request.form['body']
-            error = None
-
-            if not title: 
-                error = 'Title is required.'
-
-            if error is None:
-                note.title = title
-                note.body = body
-                db.session.add(note)
-                db.session.commit()
-                flash(f"Successfully updated note: {title}", 'success')
-                return redirect(url_for('note_index'))
-
-            flash(error, 'error')
-
-        title = note.title
-        body = note.body
-        form_post = url_for('note_update', note_id=note.id)
-        return render_template('note_form.html', note=note, header=f"Edit Note: {title}", form_post=form_post, button_value="Update Note", title=title, body=body)
-
-    @app.route('/notes/<note_id>/delete', methods=('GET', 'DELETE'))
-    @require_login
-    def note_delete(note_id):
-        note = Note.query.filter_by(user_id=g.user.id, id=note_id).first_or_404()
-        db.session.delete(note)
-        db.session.commit()
-        flash(f"Successfully deleted note: '{note.title}'", 'success')
-        return redirect(url_for('note_index'))
     app.register_blueprint(bp)
     return app
