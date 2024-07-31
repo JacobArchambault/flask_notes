@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv, find_dotenv
 from notes.authorization.require_login import require_login
+from notes.notes import bp
 from .models import db, User, Note
 load_dotenv(find_dotenv())
 
@@ -21,7 +22,7 @@ def create_app(test_config=None):
 
     db.init_app(app)
     migrate = Migrate(app, db)
-    
+
     @app.errorhandler(404)
     def page_note_found(e):
         return render_template('404.html'), 404
@@ -94,29 +95,6 @@ def create_app(test_config=None):
     def note_index():
         return render_template('note_index.html', notes=g.user.notes)
 
-
-    @app.route('/notes/new', methods=('GET', 'POST'))
-    @require_login
-    def note_create():
-        if request.method == 'POST':
-            title = request.form['title']
-            body = request.form['body']
-            error = None
-
-            if not title: 
-                error = 'Title is required.'
-            
-            if error is None:
-                note = Note(author=g.user, title=title, body=body)
-                db.session.add(note)
-                db.session.commit()
-                flash(f"Successfully created note: {title}", 'success')
-                return redirect(url_for('note_index'))
-
-            flash(error, 'error')
-        form_post = url_for('note_create')
-        return render_template('note_form.html', header="New Note", form_post=form_post, button_value="Create Note", title="", body="")
-
     @app.route('/notes/<note_id>/edit', methods=('GET', 'POST', 'PATCH', 'PUT'))
     @require_login
     def note_update(note_id):
@@ -153,4 +131,5 @@ def create_app(test_config=None):
         db.session.commit()
         flash(f"Successfully deleted note: '{note.title}'", 'success')
         return redirect(url_for('note_index'))
+    app.register_blueprint(bp)
     return app

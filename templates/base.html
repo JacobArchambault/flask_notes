@@ -23,7 +23,7 @@
       <div class="navbar-menu" id="navMenu">
         <div class="navbar-end">
           {% if g.user %}
-          <a class="navbar-item" href="{{ url_for('note_create') }}" aria-label="New Note">
+          <a class="navbar-item" href="{{ url_for('notes.note_create') }}" aria-label="New Note">
             New Note
           </a>
           <a class="navbar-item" href="{{ url_for('log_out')}}">

@@ -3,7 +3,7 @@
 {% block content %}
 {% if not notes %}
 <div class="content">
-  <p>You haven't created any notes! <a href="{{ url_for('note_create')}}">Create your first note.</a>
+  <p>You haven't created any notes! <a href="{{ url_for('notes.note_create')}}">Create your first note.</a>
 </div>
 {% endif %}
 
