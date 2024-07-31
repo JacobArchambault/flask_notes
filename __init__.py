@@ -3,8 +3,8 @@ from flask import Flask, render_template, redirect, url_for, request, session, f
 from flask_migrate import Migrate 
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv, find_dotenv
-load_dotenv(find_dotenv())
 from notes.login.require_login import require_login
+load_dotenv(find_dotenv())
 
 def create_app(test_config=None):
     app = Flask(__name__)
