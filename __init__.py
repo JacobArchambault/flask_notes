@@ -3,7 +3,8 @@ from flask import Flask, render_template, redirect, url_for, request, session, f
 from flask_migrate import Migrate 
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv, find_dotenv
-from notes.notes import bp
+from notes.notes import note_blueprint
+from notes.error.error import page_not_found
 from .models import db, User
 load_dotenv(find_dotenv())
 
@@ -21,10 +22,6 @@ def create_app(test_config=None):
 
     db.init_app(app)
     migrate = Migrate(app, db)
-
-    @app.errorhandler(404)
-    def page_note_found(e):
-        return render_template('404.html'), 404
 
     @app.before_request
     def load_user():
@@ -88,5 +85,6 @@ def create_app(test_config=None):
     def index():
         return redirect(url_for('notes.note_index'))
 
-    app.register_blueprint(bp)
+    app.register_blueprint(note_blueprint)
+    app.register_error_handler(404, page_not_found)
     return app

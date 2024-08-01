@@ -2,14 +2,14 @@ from flask import Blueprint, render_template, redirect, url_for, request, sessio
 from notes.authorization.require_login import require_login
 from notes.models import db, Note
 
-bp = Blueprint('notes', __name__, url_prefix='/notes')
+note_blueprint = Blueprint('notes', __name__, url_prefix='/notes')
 
-@bp.route('/')
+@note_blueprint.route('/')
 @require_login
 def note_index():
     return render_template('note_index.html', notes=g.user.notes)
 
-@bp.route('/new/', methods=('GET', 'POST'))
+@note_blueprint.route('/new/', methods=('GET', 'POST'))
 @require_login
 def note_create():
     if request.method == 'POST':
@@ -31,7 +31,7 @@ def note_create():
     form_post = url_for('notes.note_create')
     return render_template('note_form.html', header="New Note", form_post=form_post, button_value="Create Note", title="", body="")
 
-@bp.route('/<note_id>/edit/', methods=('GET', 'POST', 'PATCH', 'PUT'))
+@note_blueprint.route('/<note_id>/edit/', methods=('GET', 'POST', 'PATCH', 'PUT'))
 @require_login
 def note_update(note_id):
     note = Note.query.filter_by(user_id=g.user.id, id=note_id).first_or_404()
@@ -59,7 +59,7 @@ def note_update(note_id):
     form_post = url_for('notes.note_update', note_id=note.id)
     return render_template('note_form.html', note=note, header=f"Edit Note: {title}", form_post=form_post, button_value="Update Note", title=title, body=body)
 
-@bp.route('/<note_id>/delete/', methods=('GET', 'DELETE'))
+@note_blueprint.route('/<note_id>/delete/', methods=('GET', 'DELETE'))
 @require_login
 def note_delete(note_id):
     note = Note.query.filter_by(user_id=g.user.id, id=note_id).first_or_404()
