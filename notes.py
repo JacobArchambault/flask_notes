@@ -1,8 +1,10 @@
 from flask import Blueprint, render_template, redirect, url_for, request, session, flash, g
 from notes.authorization.require_login import require_login
 from notes.models import db, Note
+from notes.authorization.before_request import load_user
 
 note_blueprint = Blueprint('notes', __name__, url_prefix='/notes')
+note_blueprint.before_request(load_user)
 
 @note_blueprint.route('/')
 @require_login
