@@ -1,5 +1,5 @@
 #!/bin/sh
-source .env
+source ../.env
 #echo "creating network"
 #podman network create notes
 
