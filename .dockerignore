@@ -1,6 +1,7 @@
 **/__pycache__/
 migrations/
 venv/
+scripts/
 .dockerignore
 .gitignore
 down.sh
