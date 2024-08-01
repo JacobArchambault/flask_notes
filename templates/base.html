@@ -45,19 +45,15 @@
   <div class="container">
     {% for category, message in get_flashed_messages(with_categories=True) %}
     <div id="message{{ loop.index }}">
-      {% if category %}
-      {% if category == 'error' %}
-      <div class="notification is-danger">
+        {% if category == 'error' %}
+        <div class="notification is-danger">
         {% elif category == 'warning' %}
         <div class="notification is-warning">
-          {% elif category == 'success' %}
-          <div class="notification is-success">
-            {% else %}
-            <div class="notification">
-              {% endif %}
-              {% else %}
-              <div class="notification">
-                {% endif %}
+        {% elif category == 'success' %}
+        <div class="notification is-success">
+        {% else %}
+        <div class="notification">
+        {% endif %}
                 <button class="delete" data-target="message{{ loop.index }}" aria-label="delete"></button>
                 {{ message }}
               </div>
