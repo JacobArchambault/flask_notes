@@ -4,9 +4,7 @@ venv/
 scripts/
 .dockerignore
 .gitignore
-down.sh
 docker-compose.yml
 Dockerfile
 Pipfile.lock
-up.sh
 README.md
