@@ -1,17 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
-  let $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-  if ($navbarBurgers.length > 0) {
-    $navbarBurgers.forEach(function ($el) {
-      $el.addEventListener('click', function () {
-        let $target = document.getElementById($el.dataset.target);
-        // Toggle the class on both the "navbar-burger" and the "navbar-menu"
-        $el.classList.toggle('is-active');
-        $target.classList.toggle('is-active');
-      });
-    });
-  }
+  const $navbarBurger = document.querySelector('.navbar-burger');
+  $navbarBurger.addEventListener('click', function () {
+    const $target = document.getElementById($navbarBurger.dataset.target);
+    // Toggle the class on both the "navbar-burger" and the "navbar-menu"
+    $navbarBurger.classList.toggle('is-active');
+    $target.classList.toggle('is-active');
+  });
 
-  let $deleteIcons = Array.prototype.slice.call(document.querySelectorAll('.delete'), 0);
+  const $deleteIcons = document.querySelectorAll('.delete');
   if ($deleteIcons.length > 0) {
     $deleteIcons.forEach(function ($el) {
       $el.addEventListener('click', () => document.getElementById($el.dataset.target).remove());
