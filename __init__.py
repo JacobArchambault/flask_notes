@@ -3,8 +3,8 @@ from flask import Flask, redirect, url_for
 from flask_migrate import Migrate 
 from dotenv import load_dotenv, find_dotenv
 from notes.notes import note_blueprint
-from notes.error.error import page_not_found
-from notes.registration.registration import registration_blueprint
+from notes.error import page_not_found
+from notes.registration import registration_blueprint
 from .models import db
 
 load_dotenv(find_dotenv())
