@@ -26,14 +26,14 @@
           <a class="navbar-item" href="{{ url_for('notes.note_create') }}" aria-label="New Note">
             New Note
           </a>
-          <a class="navbar-item" href="{{ url_for('log_out')}}">
+          <a class="navbar-item" href="{{ url_for('registration.log_out')}}">
             Log Out
           </a>
           {% else %}
-          <a class="navbar-item" href="{{ url_for('log_in')}}">
+          <a class="navbar-item" href="{{ url_for('registration.log_in')}}">
             Log In
           </a>
-          <a class="navbar-item" href="{{ url_for('sign_up') }}">
+          <a class="navbar-item" href="{{ url_for('registration.sign_up') }}">
             Sign Up
           </a>
           {% endif %}

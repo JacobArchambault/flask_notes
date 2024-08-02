@@ -1,11 +1,12 @@
 import os
-from flask import Flask, render_template, redirect, url_for, request, session, flash
+from flask import Flask, redirect, url_for
 from flask_migrate import Migrate 
-from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv, find_dotenv
 from notes.notes import note_blueprint
 from notes.error.error import page_not_found
-from .models import db, User
+from notes.registration.registration import registration_blueprint
+from .models import db
+
 load_dotenv(find_dotenv())
 
 def create_app(test_config=None):
@@ -17,64 +18,10 @@ def create_app(test_config=None):
     if test_config is None:
         app.config.from_pyfile('config.py', silent=True)
     else:
-        app.config.from_mapping(test_config)
-    
+        app.config.from_mapping(test_config)    
 
     db.init_app(app)
     migrate = Migrate(app, db)
-
-    @app.route('/sign_up/', methods=('GET', 'POST'))
-    def sign_up():
-        if request.method == 'POST':
-            username = request.form['username']
-            password = request.form['password']
-            error = None
-
-            if not username: 
-                error = 'Username is required.'
-            elif not password: 
-                error = 'Password is required.'
-            elif User.query.filter_by(username=username).first():
-                error = 'Username is already taken.'
-            
-            if error is None:
-                db.session.add(User(username=username, password=generate_password_hash(password)))
-                db.session.commit()
-                flash("Successfully signed up! Please log in.", 'success')
-                return redirect(url_for('log_in'))
-
-            flash(error, 'error')
-        form_post = url_for('sign_up')
-        anchor_link = url_for('log_in')
-        return render_template('log_in_form.html', action="Sign Up", prompt="Already have an account? Log In.", form_post=form_post, anchor_link=anchor_link)
-
-    @app.route('/log_in/', methods=('GET', 'POST'))
-    def log_in():
-        if request.method == 'POST':
-            username = request.form['username']
-            password = request.form['password']
-            error = None
-
-            user = User.query.filter_by(username=username).first()
-
-            if not user or not check_password_hash(user.password, password):
-                error = 'Username or password are incorrect.'
-            
-            if error is None:
-                session.clear()
-                session['user_id'] = user.id 
-                return redirect(url_for('index'))
-
-            flash(error, 'error')
-        form_post = url_for('log_in')
-        anchor_link = url_for('sign_up')
-        return render_template('log_in_form.html', action="Log In", prompt="Don't have an account? Sign Up.", form_post=form_post, anchor_link=anchor_link)
-
-    @app.route('/log_out/', methods=('GET', 'DELETE'))
-    def log_out():
-        session.clear()
-        flash('Successfully logged out.', 'success')
-        return redirect(url_for('log_in'))
 
     @app.route('/')
     def index():
@@ -82,4 +29,5 @@ def create_app(test_config=None):
 
     app.register_blueprint(note_blueprint)
     app.register_error_handler(404, page_not_found)
+    app.register_blueprint(registration_blueprint)
     return app
