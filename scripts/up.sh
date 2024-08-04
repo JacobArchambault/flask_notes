@@ -1,10 +1,5 @@
 #!/bin/sh
 source ../.env
-#echo "creating network"
-#podman network create notes
-
-# -e PGDATA=/var/lib/postgresql/data/pgdata \
-# -v "pg-data:/var/lib/postgresql/data" \
 
 echo "creating database container"
 podman run -d \
