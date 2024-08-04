@@ -9,7 +9,7 @@ podman run -d \
  -p "5432:5432" \
  postgres:16.1-alpine
 
-sleep 8
+sleep 16
 
 echo "creating database"
 podman exec -i $DB_HOST psql -U $DB_USERNAME -c "CREATE DATABASE notes;"
