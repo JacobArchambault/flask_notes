@@ -1,6 +1,5 @@
 services:
   web:
-    restart: always
     build: .
     ports:
       - "5000:80"
